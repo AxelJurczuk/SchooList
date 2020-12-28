@@ -12,6 +12,8 @@ import com.example.android.schoolist.R
 import com.example.android.schoolist.data.DataSource
 import com.example.android.schoolist.data.ItemAdapter
 import com.example.android.schoolist.databinding.FragmentListBinding
+import com.example.android.schoolist.extensions.hide
+import com.example.android.schoolist.extensions.show
 import com.example.android.schoolist.model.Student
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
@@ -65,6 +67,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
                 adapter.studentItemsList = studentList
                 adapter.notifyDataSetChanged()
                 binding.btnSaveAbsents.isEnabled = true
+                binding.progressBar.hide()
             }
         })
 
@@ -77,6 +80,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
         //save absents
         binding.btnSaveAbsents.setOnClickListener {
 
+            binding.progressBar.show()
             val studentsList = adapter.studentItemsList
             val absentList = studentsList.filter { it.status == false }
             val mutableStudentsMap = mutableMapOf<String, Any>()
@@ -91,6 +95,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
                     .document(docReference.toString())
                     .set(mutableStudentsMap)
                     .addOnSuccessListener {
+                        binding.progressBar.hide()
                         Toast.makeText(
                             requireContext(),
                             "Absent list saved!",
@@ -100,6 +105,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
 
                     }
                     .addOnFailureListener {
+                        binding.progressBar.hide()
                         Toast.makeText(
                             requireContext(),
                             "Error saving document",

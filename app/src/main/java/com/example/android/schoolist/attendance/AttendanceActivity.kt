@@ -79,4 +79,8 @@ class AttendanceActivity : AppCompatActivity(),OnShowGroupListener {
             .addToBackStack(null)
             .commit()
     }
+
+    override fun showGroupQuery(groupName: String) {
+        TODO("Not yet implemented")
+    }
 }
