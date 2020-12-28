@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438739694744",
+    "project_id": "schoolist-807c2",
+    "storage_bucket": "schoolist-807c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438739694744:android:3310b7d0930ef48ac2cced",
+        "android_client_info": {
+          "package_name": "com.example.android.schoolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438739694744-lcv6dgtisumctbfmmtau9up5i3o4kk3i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJx1SCtdQmEH8MXx6lzbFe8-11QoKcWrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438739694744-lcv6dgtisumctbfmmtau9up5i3o4kk3i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
