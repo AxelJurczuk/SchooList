@@ -27,6 +27,24 @@ class DataSource {
             }
     }
 
+    fun loadAbsentStudents(date:String,group:String,successListener: DataFetched) {
+        val studentsList = mutableListOf<Student>()
+
+        db.collection("ausentes")
+            .document(date)
+            .collection(group)
+            .get()
+            .addOnSuccessListener {documents ->
+                for (document in documents) {
+                    studentsList.add(document.toObject(Student::class.java))
+                }
+                successListener.onFetched(studentsList)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("download failed", "download failed", exception)
+            }
+    }
+
     interface DataFetched {
         fun onFetched(studentList: List<Student>)
     }

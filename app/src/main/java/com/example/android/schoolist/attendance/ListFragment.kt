@@ -1,5 +1,6 @@
 package com.example.android.schoolist.attendance
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,11 +25,12 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
 
     companion object {
         private const val NAME = "NAME"
-        //se llama cuando se crea el fragment, en este caso quiero que se cree con parametros
-        fun newInstance (groupName:String): Fragment{
 
-            val newListFragment = ListFragment ()
-            val args = Bundle ()
+        //se llama cuando se crea el fragment, en este caso quiero que se cree con parametros
+        fun newInstance(groupName: String): Fragment {
+
+            val newListFragment = ListFragment()
+            val args = Bundle()
             args.putString(NAME, groupName)
             newListFragment.arguments = args
 
@@ -38,12 +40,18 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
 
     private lateinit var binding: FragmentListBinding
     private lateinit var adapter: ItemAdapter
-    private val db= FirebaseFirestore.getInstance()
+    private lateinit var listener: OnShowGroupListener
+    private val db = FirebaseFirestore.getInstance()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as OnShowGroupListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(layoutInflater)
         return binding.root
@@ -52,7 +60,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapter= ItemAdapter(requireContext(),this@ListFragment)
+        adapter = ItemAdapter(requireContext(), this@ListFragment)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
         if (recyclerView != null) {
             recyclerView.adapter = adapter
@@ -114,6 +122,10 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
                     }
             }
         }
+        //search by date
+        binding.btnSearchByDate.setOnClickListener {
+            listener.showGroupQuery(parsedDate, groupName)
+        }
         /*
        TODO :
        que pasa si es 1era vez y no hay conexion
@@ -128,12 +140,12 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
         )
     }
 
-    override fun onItemClickListener(position: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun onItemCheckedChanged(position: Int, checked: Boolean) {
         adapter.studentItemsList[position].status = checked
+    }
+
+    override fun onItemClickListener(position: Int) {
+        TODO("Not yet implemented")
     }
 
 }

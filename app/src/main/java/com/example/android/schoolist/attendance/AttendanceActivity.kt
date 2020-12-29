@@ -80,7 +80,14 @@ class AttendanceActivity : AppCompatActivity(),OnShowGroupListener {
             .commit()
     }
 
-    override fun showGroupQuery(groupName: String) {
-        TODO("Not yet implemented")
+    override fun showGroupQuery(date: String, groupName: String) {
+        val newListFragment = AbsentsFragment.newInstance(date, groupName)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame_container_attendance, newListFragment)
+            .addToBackStack(null)
+            .commit()
     }
+
+
 }
